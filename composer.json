@@ -1,0 +1,14 @@
+{
+    "name": "php-garlic/music",
+    "description": "music-api",
+    "keywords": ["music", "music-api"],
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "PhpGarlic\\Music\\": "src/"
+        }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^7.5"
+    }
+}
