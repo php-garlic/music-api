@@ -2,4 +2,4 @@
 
 require './vendor/autoload.php';
 
-var_dump(count(\PhpGarlic\Music\NeteaseCloudMusicApi\Personalized\NewSong::make()));
+var_dump(\PhpGarlic\Music\NeteaseCloudMusicApi\Top\Artists::make());
