@@ -16,10 +16,4 @@ class NewSong extends Base
 		'areaId' => 0,
 		'limit' => 2,
 	];
-
-	public function __construct ()
-	{
-		parent::__construct();
-		$this->sendParams['areaId'] = $this->params['areaId'] ?? 0;
-	}
 }

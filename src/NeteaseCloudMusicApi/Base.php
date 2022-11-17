@@ -12,18 +12,21 @@ abstract class Base
 	];
 
 	protected array $params = [];
+	protected array $requestParam = [];
 
 	protected $client;
 
-	public function __construct ()
+	public function __construct ($params = [], $requestParam = [])
 	{
+		$this->requestParam = $requestParam;
+		$this->sendParams = array_merge($this->sendParams, $params);
 		$this->client = new Request();
 		$this->getRequestFunction();
 	}
 
-	public static function make ()
+	public static function make ($params = [], $requestParam = [])
 	{
-		return (new static())->run();
+		return (new static($params, $requestParam))->run();
 	}
 
 	public function run ()
@@ -48,8 +51,9 @@ abstract class Base
 				$params[$key] = $this->get($key, $param);
 			}
 		}
+
 		return json_decode($this->client->post($this->uri, [
-			'form_params' => $params,
+			'form_params' => $this->parseSendParam($params),
 		]), true);
 	}
 
@@ -70,15 +74,25 @@ abstract class Base
 		return ! empty($enum) && isset($enum[$value]) ? $enum[$value] : $value;
 	}
 
-	protected function getRequestFunction ()
+	protected function getRequestFunction () : array
 	{
 		if ( function_exists('request') ) {
 			$this->params = request()->all();
 		}
 
 		if ( is_post() ) {
-			return $_POST;
+			$this->params = $_POST;
 		}
-		return $_GET;
+		if ( is_get() ) {
+			$this->params = $_GET;
+		}
+		$this->params = array_merge($this->params, $this->requestParam);
+
+		return $this->params;
+	}
+
+	protected function parseSendParam ($params) : array
+	{
+		return $params;
 	}
 }
