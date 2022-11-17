@@ -7,7 +7,7 @@ use PhpGarlic\Music\NeteaseCloudMusicApi\Base;
 /**
  *歌单 ( 网友精选碟 )
  */
-class Playlist extends Base
+class PlayList extends Base
 {
 	protected string $uri = 'https://music.163.com/api/playlist/list';
 
