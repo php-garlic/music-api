@@ -4,7 +4,7 @@ namespace PhpGarlic\Music\NeteaseCloudMusicApi;
 
 class Lyric extends Base
 {
-	protected string $uri = 'https=>//music.163.com/api/song/lyric?_nmclfl=1';
+	protected string $uri = 'https://music.163.com/api/song/lyric?_nmclfl=1';
 
 	protected array $sendParams = [
 		'id' => '',
