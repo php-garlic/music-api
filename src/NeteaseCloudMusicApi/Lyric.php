@@ -2,6 +2,9 @@
 
 namespace PhpGarlic\Music\NeteaseCloudMusicApi;
 
+/**
+ * 获取歌词
+ */
 class Lyric extends Base
 {
 	protected string $uri = 'https://music.163.com/api/song/lyric?_nmclfl=1';
