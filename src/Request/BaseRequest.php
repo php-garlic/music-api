@@ -12,7 +12,14 @@ abstract class BaseRequest
 
 	public function __construct ()
 	{
+
+
 		$this->client = new Client($this->getRequestHeaderInfo());
+	}
+
+	public function post ($url, $param = [])
+	{
+		return $this->client->post($url, $param)->getBody()->getContents();
 	}
 
 	/**
@@ -41,15 +48,21 @@ abstract class BaseRequest
 	 */
 	protected function getRequestHeaderInfo () : array
 	{
+		$ip = $this->randIP();
 		return [
-			'base_uri' => $this->baseUrl,
+			// 'base_uri' => $this->baseUrl,
 			'timeout' => 60,
 			'verify' => false,
 			'headers' => [
-				'Accept' => 'application/json',
-				'Content-type' => 'application/json;charset=utf-8',
+				'Accept' => '*/*',
+				'Content-type' => 'application/x-www-form-urlencoded',
 				'Referer' => $this->baseUrl,
 				'User-Agent' => $this->randomUserAgent(),
+				'X-Real-IP' => $ip,
+				'X-Forwarded-For' => $ip,
+				'X-From-Src' => $ip,
+				'Connection' => 'keep-alive',
+				'Accept-Language' => 'zh-CN,zh;q=0.8,gl;q=0.6,zh-TW;q=0.4',
 			],
 			'allow_redirects' => [
 				'max' => 10,
@@ -58,7 +71,7 @@ abstract class BaseRequest
 				'protocols' => ['http', 'https'],
 				'track_redirects' => true,
 			],
-
+			'debug' => false,
 			'http_errors' => true,
 			'connect_timeout' => 60,
 		];
@@ -105,5 +118,35 @@ abstract class BaseRequest
 		}
 
 		return $userAgentList[$num];
+	}
+
+	protected function randIP ()
+	{
+		$ip_long = array(
+
+			['607649792', '608174079'], //36.56.0.0-36.63.255.255
+
+			['1038614528', '1039007743'], //61.232.0.0-61.237.255.255
+
+			['1783627776', '1784676351'], //106.80.0.0-106.95.255.255
+
+			['2035023872', '2035154943'], //121.76.0.0-121.77.255.255
+
+			['2078801920', '2079064063'], //123.232.0.0-123.235.255.255
+
+			['-1950089216', '-1948778497'], //139.196.0.0-139.215.255.255
+
+			['-1425539072', '-1425014785'], //171.8.0.0-171.15.255.255
+
+			['-1236271104', '-1235419137'], //182.80.0.0-182.92.255.255
+
+			['-770113536', '-768606209'], //210.25.0.0-210.47.255.255
+
+			['-569376768', '-564133889'], //222.16.0.0-222.95.255.255
+
+		);
+		$rand_key = mt_rand(0, 9);
+		$ip= long2ip(mt_rand($ip_long[$rand_key][0], $ip_long[$rand_key][1]));
+		return $ip;
 	}
 }

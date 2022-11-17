@@ -19,7 +19,7 @@ use PhpGarlic\Music\NeteaseCloudMusicApi\Base;
  */
 class Songs extends Base
 {
-	protected string $uri = 'https://music.163.com/weapi/v1/discovery/recommend/songs';
+	protected string $uri = 'https://music.163.com/weapi/v3/discovery/recommend/songs';
 
 	protected array $sendParams = [
 		'total' => true,

@@ -6,7 +6,10 @@
     "autoload": {
         "psr-4": {
             "PhpGarlic\\Music\\": "src/"
-        }
+        },
+        "files": [
+            "src/helper.php"
+        ]
     },
     "require": {
         "php" : "^8.0",

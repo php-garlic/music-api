@@ -13,10 +13,17 @@ abstract class Base
 
 	protected array $params = [];
 
+	protected $client;
+
 	public function __construct ()
 	{
+		$this->client = new Request();
 		$this->getRequestFunction();
-		$this->run();
+	}
+
+	public static function make ()
+	{
+		return (new static())->run();
 	}
 
 	public function run ()
@@ -41,6 +48,9 @@ abstract class Base
 				$params[$key] = $this->get($key, $param);
 			}
 		}
+		return json_decode($this->client->post($this->uri, [
+			'form_params' => $params,
+		]), true);
 	}
 
 	/**
@@ -66,6 +76,9 @@ abstract class Base
 			$this->params = request()->all();
 		}
 
+		if ( is_post() ) {
+			return $_POST;
+		}
 		return $_GET;
 	}
 }
