@@ -2,4 +2,4 @@
 
 require './vendor/autoload.php';
 
-var_dump(\PhpGarlic\Music\NeteaseCloudMusicApi\Search\Defaults::make());
+var_dump(\PhpGarlic\Music\NeteaseCloudMusicApi\Search\HotDetail::make());
